@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <page path="index">
+    </page>
+    <page path="faq" />
+    <page alias="about">
+        <paths>
+            <it>chi-siamo</it>
+            <en>about-us</en>
+        </paths>
+    </page>
+    <page alias="category">
+        <paths>
+            <it>it/{category}</it>
+            <en>en/{category}</en>
+        </paths>
+        <page alias="product">
+            <paths>
+                <it>{sku}</it>
+                <en>{sku}</en>
+            </paths>
+            <page alias="detail">
+                <paths>
+                    <it>dettaglio</it>
+                    <en>detail</en>
+                </paths>
+            </page>
+        </page>
+    </page>
+</root>
