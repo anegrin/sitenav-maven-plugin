@@ -32,11 +32,15 @@ class SitenavHandler extends DefaultHandler {
 
         if ("page".equals(qName) || "root".equals(qName)) {
             String pAttr = attributes.getValue("path");
-            String path = "root".equals(qName) ? "/" : pAttr;
+            String path = "root".equals(qName) ? null : pAttr;
             String alias = attributes.getValue("alias");
 
             Page current = stack.isEmpty() ? null : stack.peek();
-            String fullPath = current!=null ? getPath(current.parent, qName)+"/"+path : "/"+path;
+            String pathToAppend = current != null ? getPath(current, "*") : null;
+            String fullPath = null;
+            if (path != null) {
+                fullPath = pathToAppend != null ? pathToAppend + "/" + path : "/" + path;
+            }
             Page newPage = new Page(current, fullPath, alias != null ? alias : path);
             stack.push(newPage);
 
@@ -57,34 +61,36 @@ class SitenavHandler extends DefaultHandler {
             isInPaths = false;
         } else if (!isInPaths && !stack.isEmpty()) {
             root = stack.pop();
-        } else if (isInPaths){
+        } else if (isInPaths) {
             Page current = stack.peek();
-            Path path = new Path(qName, getPath(current.parent, qName)+"/"+sb.toString());
+            String pathToAppend = current != null ? getPath(current.parent, qName) : null;
+            String fullPath = pathToAppend != null ? pathToAppend + "/" + sb.toString() : "/" + sb.toString();
+            Path path = new Path(qName, fullPath);
             current.addPath(path);
-            capture=false;
+            capture = false;
         }
 
         sb.delete(0, sb.length());
     }
 
-
     public String getPath(Page page, String lang) {
-        if (page!=null) {
+        if (page != null) {
             for (Path p : page.getPaths()) {
                 if (lang.equals(p.lang)) {
-                    return p.value;
+                    return p.value != null ? p.value : "";
                 }
             }
-            
+
             for (Path p : page.getPaths()) {
                 if (lang.equals("*")) {
-                    return p.value;
+                    return p.value != null ? p.value : "";
                 }
             }
         }
-        
-        return "";
+
+        return null;
     }
+
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         super.characters(ch, start, length);

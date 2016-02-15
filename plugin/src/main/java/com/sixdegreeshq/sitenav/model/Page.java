@@ -46,7 +46,7 @@ public class Page {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer(100);
-        sb.append('(').append(path).append(',').append(alias).append(") => [");
+        sb.append('(').append(getPaths()).append(',').append(alias).append(") => [");
         if (children != null) {
             for (Page page : children) {
                 sb.append(page.toString()).append(',');
@@ -67,6 +67,13 @@ public class Page {
             this.lang = lang;
             this.value = value;
         }
+
+        @Override
+        public String toString() {
+            return lang+":"+value;
+        }
+        
+        
     }
 
 }

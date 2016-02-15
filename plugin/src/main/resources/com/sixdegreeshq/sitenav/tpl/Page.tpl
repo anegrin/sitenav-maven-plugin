@@ -7,9 +7,16 @@ public class Page implements Serializable {
     Page() {
     }
 
+    /**
+     * this is a url builder, WARN: by default it's not threadsafe;
+     * call threadsafe() first if you need to it be threadsafe (but you can
+     * just ask for a new builder...)
+     *
+     */
     public static class URLBuilder {
 
         private StringBuffer sb=new StringBuffer();
+        private boolean threadsafe = false;
 
         URLBuilder(String path) {
             sb.append(path);
@@ -19,9 +26,37 @@ public class Page implements Serializable {
             this.sb = sb;
         }
 
+        private URLBuilder(StringBuffer sb, boolean threadsafe) {
+            this.sb = sb;
+            this.threadsafe = threadsafe;
+        }
+
+        /**
+         * create threadsafe builder
+         *
+         */
+        public URLBuilder threasafe(){
+            return new URLBuilder(new StringBuffer(sb), true);
+        }
+         
+        /**
+         * alias for param(name, value)
+         *
+         */
+        public URLBuilder p(String name, Object value) {
+            return param(name, value);
+        }
+        
+        /**
+         * append a param (if value is not null)
+         *
+         * @param name param name
+         * @param value param value
+         * @return this
+         */
         public URLBuilder param(String name, Object value) {
         
-            if (value==null) {
+            if (name==null || value==null) {
                 return this;
             }
 
@@ -39,23 +74,53 @@ public class Page implements Serializable {
                 throw new RuntimeException(t);
             }
 
-            return new URLBuilder(sb);
+            return threadsafe ? new URLBuilder(new StringBuffer(sb), true) : this;
         }
 
+        /**
+         * alias for expand(values)
+         *
+         */
+        public URLBuilder e(Object... values) {
+            return expand(values);
+        }
+        
+        /**
+         * expand {pathVaribale}  
+         *
+         * @param values path variables values
+         * @return this
+         */
         public URLBuilder expand(Object... values) {
 
             for (Object value : values) {
 
                 int start = sb.indexOf("{");
                 if (start != -1) {
-                    int end = sb.indexOf("}", start);
+                    int end = sb.indexOf("}/", start);
+                    if (end==-1){
+                        end=sb.length()-1;
+                    }
                     sb.delete(start, end+1);
                     sb.insert(start, ""+value);
                 }
             }
-            return new URLBuilder(sb);
+            return threadsafe ? new URLBuilder(new StringBuffer(sb), true) : this;
         }
 
+        /**
+         * alias for build()
+         *
+         */
+        public String b() {
+            return build();
+        }
+        
+        /**
+         * build the url
+         *
+         * @return the final url
+         */
         public String build() {
             return sb.toString();
         }

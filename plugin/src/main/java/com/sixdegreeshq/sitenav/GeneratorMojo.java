@@ -77,17 +77,13 @@ public class GeneratorMojo extends AbstractMojo {
     private boolean testing;
 
     /**
-     * java code to resolve locale (if not specified the generated code will 
-     * automatically choose between org.springframework.context.i18n.LocaleContextHolder.getLocale() 
-     * (is spring class is present)
-     * and java.util.Locale.getDefault()
+     * java code to resolve locale
      *
-     * @parameter
      */
     @Getter
     @Setter
-    @Parameter
-    private String localeResolutionCode;
+    @Parameter(defaultValue = "java.util.Locale.getDefault()")
+    private String localeResolutionCode = "java.util.Locale.getDefault()";
 
     private Log log = getLog();
 
@@ -130,7 +126,7 @@ public class GeneratorMojo extends AbstractMojo {
 
                     String nodeSB = readResource("/com/sixdegreeshq/sitenav/tpl/Node.tpl");;
                     String nodeContent = nodeSB.toString()
-                            .replace("${localeDeclaration}", getLocaleDeclaration())
+                            .replace("${localeDeclaration}", localeResolutionCode)
                             .replace("${className}", className)
                             .replace("${packageDeclaration}", "package " + outputPackage + ";")
                             .replace("${alias}", className)
@@ -139,7 +135,8 @@ public class GeneratorMojo extends AbstractMojo {
                             .replace("${pathsDeclarations}", getDeclarations(topLevelNode.getPaths()))
                             .replace("${classModifier}", "");
 
-                    nodeContent = nodeContent.replace("${children}", navigate(topLevelNode));
+                    nodeContent = nodeContent.replace("${childrenDeclaration}", navigate(topLevelNode));
+                    nodeContent = nodeContent.replace("${children}", children(topLevelNode));
 
                     FileOutputStream nodeFOS = new FileOutputStream(new File(packageDir, className + ".java"));
                     nodeFOS.write(nodeContent.getBytes());
@@ -176,7 +173,7 @@ public class GeneratorMojo extends AbstractMojo {
                 String nodeSB = readResource("/com/sixdegreeshq/sitenav/tpl/Node.tpl");
 
                 String nodeContent = nodeSB.toString()
-                        .replace("${localeDeclaration}", getLocaleDeclaration())
+                        .replace("${localeDeclaration}", localeResolutionCode)
                         .replace("${className}", child.alias)
                         .replace("${packageDeclaration}", "")
                         .replace("${alias}", child.alias)
@@ -185,7 +182,8 @@ public class GeneratorMojo extends AbstractMojo {
                         .replace("${pathsDeclarations}", getDeclarations(child.getPaths()))
                         .replace("${classModifier}", "static");
 
-                nodeContent = nodeContent.replace("${children}", navigate(child));
+                nodeContent = nodeContent.replace("${childrenDeclaration}", navigate(child));
+                nodeContent = nodeContent.replace("${children}", children(child));
 
                 code.append('\n').append(nodeContent).append('\n');
             }
@@ -211,20 +209,6 @@ public class GeneratorMojo extends AbstractMojo {
         }
 
         return sb.toString();
-    }
-
-    private CharSequence getLocaleDeclaration() {
-
-        if (localeResolutionCode != null) {
-            return localeResolutionCode;
-        }
-
-        try {
-            Class.forName("org.springframework.context.i18n.LocaleContextHolder");
-            return "org.springframework.context.i18n.LocaleContextHolder.getLocale()";
-        } catch (Throwable t) {
-            return "java.util.Locale.getDefault()";
-        }
     }
 
     /**
@@ -265,7 +249,13 @@ public class GeneratorMojo extends AbstractMojo {
         if (paths != null) {
             for (Page.Path path : paths) {
                 sb.append("/** ").append(path.value).append(" */").append('\n');
-                sb.append("public static final String _p");
+                sb.append("public static final String path");
+                if (!"*".equals(path.lang)) {
+                    sb.append('_').append(path.lang);
+                }
+                sb.append("=\"").append(path.value).append("\";").append('\n');
+                sb.append("/** ").append(path.value).append(" */").append('\n');
+                sb.append("public static final String p");
                 if (!"*".equals(path.lang)) {
                     sb.append('_').append(path.lang);
                 }
@@ -274,5 +264,22 @@ public class GeneratorMojo extends AbstractMojo {
         }
 
         return sb;
+    }
+
+    private CharSequence children(Page page) {
+        if (!page.getChildren().isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            boolean first = true;
+            for (Page child : page.getChildren()) {
+                if (!first) {
+                    sb.append(',');
+                }
+                sb.append(page.alias + "." + child.alias + ".class");
+                first = false;
+            }
+            return sb.toString();
+        }
+
+        return "";
     }
 }

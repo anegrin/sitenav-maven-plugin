@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.sixdegreeshq</groupId>
         <artifactId>sitenav-maven</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
     </parent>
     <artifactId>sitenav-maven-plugin-test</artifactId>
     <packaging>jar</packaging>
@@ -48,7 +48,7 @@
             <plugin>
                 <groupId>com.sixdegreeshq</groupId>
                 <artifactId>sitenav-maven-plugin</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
                 <executions>
                     <execution>
                         <goals>

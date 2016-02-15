@@ -61,4 +61,39 @@ public class GenerationTest {
         assertTrue("/en/fruit/banana/detail?test=valore".equals(result));
     }
 
+    @Test
+    public void noMultilang() {
+        String build = R.search.what.builder().expand("stuff").build();
+        assertTrue("/search/stuff".equals(build));
+    }
+
+    @Test
+    public void regexp() {
+        String re = R.regexp.builder().build();
+        assertTrue("/regexp".equals(re));
+        re = R.regexp.re1.builder().expand("value").build();
+        assertTrue("/regexp/value".equals(re));
+        re = R.regexp.re2.builder().build();
+        assertTrue("/regexp/re2".equals(re));
+        re = R.regexp.re2.re1.builder().expand("value").build();
+        assertTrue("/regexp/re2/value".equals(re));
+        re = R.regexp.re2.re1.close.builder().expand("value").build();
+        assertTrue("/regexp/re2/value/close".equals(re));
+    }
+
+    @Test
+    public void children() {
+        assertTrue(R.regexp.children[0] == R.regexp.re1.class);
+        assertTrue(R.regexp.children[1] == R.regexp.re2.class);
+        assertTrue(R.regexp.re2.children[0] == R.regexp.re2.re1.class);
+    }
+
+    @Test
+    public void shortcuts() {
+        String build = R.category.product.detail.b("it").p("test", "valore").p("tnull", null).e("fruit", "banana").b();
+        String rebuild = R.category.product.detail.b("it").e("fruit", "banana").p("test", "valore").p("tnull", null).b();
+        assertTrue(build.equals(rebuild));
+
+    }
+
 }

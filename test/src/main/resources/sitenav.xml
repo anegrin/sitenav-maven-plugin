@@ -27,4 +27,15 @@
             </page>
         </page>
     </page>
+    <page path="search" alias="search">
+        <page alias="what" path="{what}" />
+    </page>
+    <page path="regexp" alias="regexp">
+        <page alias="re1" path="{re1:.+\\}}" />
+        <page path="re2">
+            <page alias="re1" path="{re1:.+\\}}">
+                <page path="close" />
+            </page>
+        </page>
+    </page>
 </root>

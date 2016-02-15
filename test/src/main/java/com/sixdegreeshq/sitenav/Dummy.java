@@ -21,10 +21,10 @@ public class Dummy {
         return "test";
     }
 
-    @RequestMapping(value = index._p)
+    @RequestMapping(value = index.p)
     public void index() {
     }
-    @RequestMapping(value = {detail._p_it, detail._p_en})
+    @RequestMapping(value = {detail.p_it, detail.p_en})
     public void detail() {
     }
 }
