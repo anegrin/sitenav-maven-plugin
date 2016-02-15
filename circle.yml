@@ -9,8 +9,11 @@ test:
     - mvn install
   post:
     - git clone --depth=1 git@github.com:sixdegreeshq/sixdegreeshq.github.io.git $CIRCLE_ARTIFACTS/.
+    - rm -rf $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven
+    - mkdir -p $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven
     - rm -rf $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven-plugin
     - mkdir -p $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven-plugin
+    - cp -r ${HOME}/.m2/repository/com/sixdegreeshq/sitenav-maven/* $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven/.
     - cp -r ${HOME}/.m2/repository/com/sixdegreeshq/sitenav-maven-plugin/* $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven-plugin/.
     - git -C $CIRCLE_ARTIFACTS config user.email "alessandro.negrin@gmail.com"
     - git -C $CIRCLE_ARTIFACTS config user.name "CircleCI"
