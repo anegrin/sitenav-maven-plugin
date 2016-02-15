@@ -93,7 +93,7 @@ public class GenerationTest {
         String build = R.category.product.detail.b("it").p("test", "valore").p("tnull", null).e("fruit", "banana").b();
         String rebuild = R.category.product.detail.b("it").e("fruit", "banana").p("test", "valore").p("tnull", null).b();
         assertTrue(build.equals(rebuild));
-
+        assertTrue(R.index.b().b().equals(R.index.b().toString()));
     }
 
 }

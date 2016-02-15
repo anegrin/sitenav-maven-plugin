@@ -47,22 +47,11 @@ public class Page implements Serializable {
             return param(name, value);
         }
         
-        /**
-         * alias for param(name, values)
+        /*
+         * append a param values (if value is not null)
          *
          */
-        public URLBuilder p(String name, Object...values) {
-            return param(name, values);
-        }
-        
-        /**
-         * append a param (if value is not null)
-         *
-         * @param name param name
-         * @param values param values
-         * @return this
-         */
-        public URLBuilder param(String name, Object...values) {
+        private URLBuilder param(String name, Object...values) {
             URLBuilder returnMe = this;
             for(Object value : values){
                 if (value!=null){
@@ -153,6 +142,15 @@ public class Page implements Serializable {
          */
         public String build() {
             return sb.toString();
+        }
+    
+        /**
+         * equivalent to .build()
+         *
+         */
+        @Override
+        public String toString(){
+            return build(); 
         }
     }
 
