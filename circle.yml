@@ -8,7 +8,7 @@ test:
   override:
     - mvn install
   post:
-    - git clone --depth=1 git@github.com:anegrin/sixdegreeshq.github.io.git $CIRCLE_ARTIFACTS/.
+    - git clone --depth=1 git@github.com:sixdegreeshq/sixdegreeshq.github.io.git $CIRCLE_ARTIFACTS/.
     - rm -rf $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven-plugin
     - mkdir -p $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven-plugin
     - cp -r ${HOME}/.m2/repository/com/sixdegreeshq/sitenav-maven-plugin/* $CIRCLE_ARTIFACTS/com/sixdegreeshq/sitenav-maven-plugin/.
