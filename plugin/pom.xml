@@ -3,8 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sixdegreeshq</groupId>
     <artifactId>sitenav-maven-plugin</artifactId>
-    <version>0.0.2</version>
     <packaging>maven-plugin</packaging>
+    <parent>
+        <groupId>com.sixdegreeshq</groupId>
+        <artifactId>sitenav-maven</artifactId>
+        <version>0.0.2</version>
+    </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.6</maven.compiler.source>

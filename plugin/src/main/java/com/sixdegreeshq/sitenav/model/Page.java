@@ -36,6 +36,7 @@ public class Page {
     }
 
     public void addPath(Path path) {
+        paths.remove(path);
         paths.add(path);
     }
 
@@ -72,6 +73,17 @@ public class Page {
         public String toString() {
             return lang+":"+value;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            try {
+                return lang.equals(Path.class.cast(obj).lang);
+            } catch (Throwable t){
+                return false;
+            }
+        }
+        
+        
         
         
     }

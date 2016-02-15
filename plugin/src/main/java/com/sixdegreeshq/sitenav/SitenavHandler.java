@@ -44,6 +44,15 @@ class SitenavHandler extends DefaultHandler {
             Page newPage = new Page(current, fullPath, alias != null ? alias : path);
             stack.push(newPage);
 
+            if (current != null && current.getPaths().size() > 1) {
+                for (Path p : current.getPaths()) {
+                    if (!p.lang.equals("*")) {
+                        Path subPath = new Path(p.lang, p.value+"/"+path);
+                        newPage.addPath(subPath);
+                    }
+                }
+            }
+
             if (current != null) {
                 current.addChild(newPage);
             }

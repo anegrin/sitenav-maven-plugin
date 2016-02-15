@@ -14,11 +14,7 @@
             <it>it/{category}</it>
             <en>en/{category}</en>
         </paths>
-        <page alias="product">
-            <paths>
-                <it>{sku}</it>
-                <en>{sku}</en>
-            </paths>
+        <page alias="product" path="{sku}">
             <page alias="detail">
                 <paths>
                     <it>dettaglio</it>
