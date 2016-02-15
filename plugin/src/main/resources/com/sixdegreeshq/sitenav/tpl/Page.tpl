@@ -48,6 +48,32 @@ public class Page implements Serializable {
         }
         
         /**
+         * alias for param(name, values)
+         *
+         */
+        public URLBuilder p(String name, Object...values) {
+            return param(name, values);
+        }
+        
+        /**
+         * append a param (if value is not null)
+         *
+         * @param name param name
+         * @param values param values
+         * @return this
+         */
+        public URLBuilder param(String name, Object...values) {
+            URLBuilder returnMe = this;
+            for(Object value : values){
+                if (value!=null){
+                    returnMe = returnMe.param(name, value);
+                }
+            }
+            
+            return threadsafe ? new URLBuilder(new StringBuffer(sb), true) : returnMe;
+        }
+        
+        /**
          * append a param (if value is not null)
          *
          * @param name param name
@@ -58,6 +84,10 @@ public class Page implements Serializable {
         
             if (name==null || value==null) {
                 return this;
+            }
+            
+            if (value.getClass().isArray()){
+                return param(name, (Object[]) value);
             }
 
             if (sb.indexOf("?") == -1) {
