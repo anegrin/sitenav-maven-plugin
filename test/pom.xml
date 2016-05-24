@@ -46,7 +46,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>c${project.groupId}</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>sitenav-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <executions>
