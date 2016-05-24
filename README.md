@@ -173,9 +173,9 @@ ${T(R.category$product$detail).b().e("fruit", "banana").b()}
 that in thymeleaf becomes:
 
 ```html
-<a th:href="@{${T(R.index).builder().build()}}">index</a>
+<a th:href='@{${T(R.index).builder().build()}}'>index</a>
 ...
-<a th:href="@{${T(R.category$product$detail).b().e("fruit", "banana").b()}}>banana</a>
+<a th:href='@{${T(R.category$product$detail).b().e("fruit", "banana").b()}}'>banana</a>
 ...
 ```
 
