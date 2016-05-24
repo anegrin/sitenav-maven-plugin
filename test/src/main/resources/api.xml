@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <page path="api">
+        <page path="faq" />
+        <page path="search" alias="search">
+            <page alias="what" path="{what}" />
+        </page>
+    </page>
+</root>

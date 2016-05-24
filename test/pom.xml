@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.sixdegreeshq</groupId>
         <artifactId>sitenav-maven</artifactId>
-        <version>0.0.2</version>
+        <version>0.2.0</version>
     </parent>
     <artifactId>sitenav-maven-plugin-test</artifactId>
     <packaging>jar</packaging>
@@ -46,17 +46,33 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.sixdegreeshq</groupId>
+                <groupId>c${project.groupId}</groupId>
                 <artifactId>sitenav-maven-plugin</artifactId>
-                <version>0.0.2</version>
+                <version>${project.version}</version>
                 <executions>
                     <execution>
+                        <id>main</id>
                         <goals>
                             <goal>generator</goal>
                         </goals>
-                        <configuration>
+                        <!-- defaults value -->
+                        <!-- configuration>
                             <inputResourceLocation>sitenav.xml</inputResourceLocation>
                             <outputPackage>R</outputPackage>
+                            <outputFolder>target/generated-sources/java</outputFolder>
+                            <testing>false</testing>
+                        </configuration -->
+                    </execution>
+                    <execution>
+                        <id>secondary</id>
+                        <goals>
+                            <goal>generator</goal>
+                        </goals>
+                        <configuration><!-- some alternative values -->
+                            <inputResourceLocation>api.xml</inputResourceLocation><!-- different xml -->
+                            <outputPackage>API</outputPackage><!-- different output package -->
+                            <localeResolutionCode>org.springframework.context.i18n.LocaleContextHolder.getLocale()</localeResolutionCode><!-- use spring locale resolution -->
+                            <testing>true</testing><!-- look for resource in testing folders too -->
                         </configuration>
                     </execution>
                 </executions>

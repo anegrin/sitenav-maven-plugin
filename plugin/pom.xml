@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.sixdegreeshq</groupId>
     <artifactId>sitenav-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
+    <name>Sitenav Maven Plugin</name>
+    <description>
+        
+        you can describe your site structure with an xml a this plugin will
+        generate a package and a set of classes reflecting the structure.
+        this should help you in your java/jsp/thymeleaf code (but basically in all
+        your code) with autocompletion (if you're using an IDE) and automatic checking
+        while compiling/running
+        
+    </description>
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/sixdegreeshq/sitenav-maven-plugin/issues</url>
+    </issueManagement>    
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:https://github.com/sixdegreeshq/sitenav-maven-plugin.git</connection>
+        <developerConnection>scm:git:https://github.com/sixdegreeshq/sitenav-maven-plugin.git</developerConnection>
+        <url>https://github.com/sixdegreeshq/sitenav-maven-plugin</url>
+    </scm>
+    <organization>
+        <name>sixdegrees</name>
+        <url>http://sixdegreeshq.com/</url>
+    </organization> 
     <parent>
         <groupId>com.sixdegreeshq</groupId>
         <artifactId>sitenav-maven</artifactId>
-        <version>0.0.2</version>
+        <version>0.2.0</version>
     </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
