@@ -2,6 +2,8 @@
 
 A [Maven](http://maven.apache.org/) plugin that generates classes from a given XML sitenav. You can describe your site structure with an xml a this plugin will generate a package and a set of classes reflecting the structure. This should help you in your java/jsp/thymeleaf code (but basically in all your code) with autocompletion (if you're using an IDE) and automatic checking while compiling/running.
 
+It saves you from typo errors and helps you when you need to refactor your site's navigation structure.
+
 # Installation
 
 Add the plugin repository:
@@ -179,6 +181,6 @@ that in thymeleaf becomes:
 ...
 ```
 
-Do not forget to look at [test files](https://github.com/sixdegreeshq/sitenav-maven-plugin) to read more examples! have fun!
+Do not forget to look at [test files](https://github.com/sixdegreeshq/sitenav-maven-plugin/tree/master/test) to read more examples! have fun!
 
 
